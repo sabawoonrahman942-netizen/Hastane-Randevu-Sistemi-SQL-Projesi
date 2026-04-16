@@ -2,27 +2,22 @@ USE HospitalAppointmentDB;
 GO
 
 -- ============================================================
--- TABLO 1: Departments (Bölümler / Poliklinikler)
--- En bağımsız tablo — hiçbir FK içermez.
--- ============================================================
+
 CREATE TABLE Departments (
     DepartmentID   INT           IDENTITY(1,1) PRIMARY KEY,
-    DepartmentName NVARCHAR(100) NOT NULL UNIQUE,  -- Kardiyoloji, Ortopedi vb.
-    Floor          INT           NULL              -- Kaçıncı katta?
+    DepartmentName NVARCHAR(100) NOT NULL UNIQUE,
+    Floor          INT           NULL              
 );
 GO
-PRINT 'Departments tablosu oluşturuldu.';
+PRINT 'Departments tablosu oluÃ¾turuldu.';
 
 -- ============================================================
--- TABLO 2: Doctors (Doktorlar)
--- Departments tablosuna N-1 ile bağlı.
--- Bir departmanın birden fazla doktoru olur.
--- ============================================================
+
 CREATE TABLE Doctors (
     DoctorID      INT           IDENTITY(1,1) PRIMARY KEY,
     FirstName     NVARCHAR(50)  NOT NULL,
     LastName      NVARCHAR(50)  NOT NULL,
-    Title         NVARCHAR(30)  NOT NULL DEFAULT 'Dr.',  -- Dr., Prof. Dr., Doç. Dr.
+    Title         NVARCHAR(30)  NOT NULL DEFAULT 'Dr.',  -- Dr., Prof. Dr., DoÃ§. Dr.
     DepartmentID  INT           NOT NULL,
     PhoneNumber   VARCHAR(15)   NULL,
     Email         NVARCHAR(100) NULL UNIQUE,
@@ -32,25 +27,23 @@ CREATE TABLE Doctors (
         FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
 );
 GO
-PRINT 'Doctors tablosu oluşturuldu.';
+PRINT 'Doctors tablosu oluÃ¾turuldu.';
 
 -- ============================================================
--- TABLO 3: Patients (Hastalar)
--- Bağımsız tablo — hasta bilgileri.
--- ============================================================
+
 CREATE TABLE Patients (
     PatientID    INT           IDENTITY(1,1) PRIMARY KEY,
     FirstName    NVARCHAR(50)  NOT NULL,
     LastName     NVARCHAR(50)  NOT NULL,
-    TCNumber     CHAR(11)      NOT NULL UNIQUE,   -- TC Kimlik No: tam 11 karakter
+    TCNumber     CHAR(11)      NOT NULL UNIQUE,   
     BirthDate    DATE          NOT NULL,
-    Gender       CHAR(1)       NOT NULL CHECK (Gender IN ('E', 'K')),  -- E: Erkek, K: Kadın
+    Gender       CHAR(1)       NOT NULL CHECK (Gender IN ('E', 'K')),  
     PhoneNumber  VARCHAR(15)   NULL,
     Email        NVARCHAR(100) NULL UNIQUE,
     CreatedAt    DATETIME      NOT NULL DEFAULT GETDATE()
 );
 GO
-PRINT 'Patients tablosu oluşturuldu.';
+PRINT 'Patients tablosu oluÃ¾turuldu.';
 
 
 CREATE TABLE Appointments (
@@ -79,5 +72,5 @@ CREATE TABLE Appointments (
         CHECK (AppointmentDate >= CAST(GETDATE() AS DATE))
 );
 GO
-PRINT 'Appointments tablosu oluşturuldu.';
-PRINT '>>> Tüm tablolar başarıyla oluşturuldu!';
+PRINT 'Appointments tablosu oluÃ¾turuldu.';
+PRINT '>>> TÃ¼m tablolar baÃ¾arÃ½yla oluÃ¾turuldu!';
